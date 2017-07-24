@@ -1,23 +1,44 @@
 version: "3"
 
 services:
-    mybackend:
+    api:
         image: my-backend
         build: ./api
-        command: apistar run --port 5000 --host 0.0.0.0
+        command: apistar run --port 80 --host 0.0.0.0
+        ports:
+            - 80
+        networks:
+            - backend
+        environment:
+            VIRTUAL_HOST: api.app.dev
 
-    myfrontend:
+    web:
         image: my-frontend
         build: ./frontend
+        networks:
+            - frontend
+        environment:
+            VIRTUAL_HOST: app.app.dev
 
-    myloadbalancer:
-        image: my-balancer
-        build: ./balancer
+    lb:
+        image: dockercloud/haproxy
         ports:
-            - "80:80"
+            - '80:80'
         depends_on:
-            - mybackend
-            - myfrontend
+            - api
+            - web
+        networks:
+            - backend
+            - frontend
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
         links:
-            - mybackend
-            - myfrontend
+            - api
+            - web
+
+
+networks:
+    backend:
+        driver: bridge
+    frontend:
+        driver: bridge
