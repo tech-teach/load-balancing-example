@@ -36,7 +36,6 @@ services:
             - api
             - web
 
-
 networks:
     backend:
         driver: bridge
