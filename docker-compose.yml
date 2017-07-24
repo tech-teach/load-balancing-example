@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+    mybackend:
+        image: my-backend
+        ports:
+            - "5000:8081"
+        networks:
+            - internal
+        deploy:
+            mode: replicated
+            replicas: 2
+
+    myfrontend:
+        image: my-frontend
+        ports:
+            - "80:8080"
+        networks:
+            - internal
+        deploy:
+            mode: replicated
+            replicas: 2
+
+    myloadbalancer:
+        image: my-balancer
+        ports:
+            - "80:6969"
+        networks:
+            - internal
+            - ingress
+        depends_on:
+            - mybackend
+            - myfrontend
+
+networks:
+    internal:
+        driver: overlay
+        external: false
+    ingress:
+        external: true
