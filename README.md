@@ -44,7 +44,7 @@ implements [CORS] by default and that makes a lot of sense for APIS.
 
 ## Run
 
-In this particular case we're using [docer-compose] however there are other
+In this particular case we're using [docker-compose] however there are other
 options. To run it you can,
 
 ```bash
