@@ -1,4 +1,5 @@
-git+https://github.com/tomchristie/apistar.git
+apistar==0.2.1
+psutil==5.2.0
 certifi==2017.4.17
 chardet==3.0.4
 click==6.7

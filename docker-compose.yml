@@ -24,6 +24,7 @@ services:
         image: dockercloud/haproxy
         ports:
             - '80:80'
+            - '1936:1936'
         depends_on:
             - api
             - web
